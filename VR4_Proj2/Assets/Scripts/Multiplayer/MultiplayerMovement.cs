@@ -14,10 +14,18 @@ public class MultiplayerMovement : MonoBehaviour
     private Rigidbody myRB;         // player rigidbody
     private Transform myXRRig;      // XR headset rigidbody
 
-
-    // System vars
-    bool grounded;
+    [Header("Ground Check")]
+    public float playerHeight = 0.6f;
     public LayerMask groundedMask;
+    public bool grounded;
+    public float currentGravity = 0f;
+    private float maxGravity = -9.8f;
+
+    [Header("Slope Handling")]
+    public float maxSlopeAngle;
+    private RaycastHit slopeHit;
+    public bool onSlope;
+
     Vector3 moveAmount;
     Vector3 smoothMoveVelocity;
 
@@ -53,20 +61,57 @@ public class MultiplayerMovement : MonoBehaviour
         moveAmount = Vector3.SmoothDamp(movement, targetMoveAmount, ref smoothMoveVelocity, 0.15f);
 
         // Ground check
-        Ray ray = new Ray(transform.position, -transform.up);
+        Vector3 playerHeightOffset = new Vector3(0.0f, 1.0f, 0.0f);
+        Ray ray = new Ray(transform.position + playerHeightOffset, -transform.up);
         RaycastHit hit;
 
         // rotate with XR
-        GameObject cameraTransform = myXrOrigin.transform.GetChild(0).GetChild(0).gameObject;
-        Vector3 eulerRotation = new Vector3(transform.eulerAngles.x, myXRRig.eulerAngles.y, transform.eulerAngles.z);
-        transform.rotation = Quaternion.Euler(eulerRotation);
+        if (inputData.Device.TryGetFeatureValue(CommonUsages.deviceRotation, out Quaternion rotD))
+        {
+            Vector3 eulerRotation = new Vector3(transform.eulerAngles.x, rotD.eulerAngles.y, transform.eulerAngles.z);
+            transform.rotation = Quaternion.Euler(eulerRotation);
+        }
+        else
+        {
+            GameObject cameraTransform = myXrOrigin.transform.GetChild(0).GetChild(0).gameObject;
+            Vector3 eulerRotation = new Vector3(transform.eulerAngles.x, myXRRig.eulerAngles.y, transform.eulerAngles.z);
+            transform.rotation = Quaternion.Euler(eulerRotation);
+        }
 
-        grounded = (Physics.Raycast(ray, out hit, 1 + 0.1f, groundedMask)) ? true : false;
+        grounded = (Physics.Raycast(ray, out hit, playerHeight + 0.1f, groundedMask)) ? true : false;
     }
 
     private void FixedUpdate()
     {
         Vector3 localMove = transform.TransformDirection(moveAmount) * Time.fixedDeltaTime;
         myRB.MovePosition(myRB.position + localMove);
+
+        // turn off gravity when on a slope
+        //myRB.useGravity = !grounded;
+        if (!grounded)
+        {
+            if (currentGravity > maxGravity)
+                currentGravity -= 0.1f;
+        }
+        else
+            currentGravity = 0;
+
+        Vector3 gravity = currentGravity * Vector3.up;
+        myRB.AddForce(gravity, ForceMode.Acceleration);
+    }
+
+    // check if player is positioned above a slope
+    private bool slopeCheck()
+    {
+        onSlope = Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f);
+        // perform a raycast if the length between the player and the floor beneath it is +0.3f
+        // the information about the object will be stored on slopeHit
+        if (onSlope)
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle < maxSlopeAngle && angle != 0;
+        }
+
+        return false;
     }
 }

@@ -510,7 +510,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -550,10 +550,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ecc4a3c7fe455545a61042ff781ab98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  movementSpeed: 40
+  playerHeight: 0.92
   groundedMask:
     serializedVersion: 2
     m_Bits: 8
+  grounded: 0
+  currentGravity: 0
+  maxSlopeAngle: 60
+  onSlope: 0
 --- !u!1 &3589564429353565977
 GameObject:
   m_ObjectHideFlags: 0
