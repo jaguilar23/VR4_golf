@@ -448,6 +448,7 @@ GameObject:
   - component: {fileID: 6970316697445926441}
   - component: {fileID: 4295301657803857265}
   - component: {fileID: 1178871805920371141}
+  - component: {fileID: 3254284965480147241}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -559,6 +560,21 @@ MonoBehaviour:
   currentGravity: 0
   maxSlopeAngle: 60
   onSlope: 0
+--- !u!114 &3254284965480147241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3453841651000308543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7868aa39ef44414c940a2d5ff57c9ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCourse: 1
+  playerPutter: {fileID: 4208968603298819288, guid: 935d1ddcefa7e3546832b8fcd40d3964, type: 3}
+  playerBall: {fileID: 2645504115512630908, guid: 31c7d4ba2a30c154595492812898288a, type: 3}
 --- !u!1 &3589564429353565977
 GameObject:
   m_ObjectHideFlags: 0
