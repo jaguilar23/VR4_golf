@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6953613167131988764}
   - component: {fileID: 1598226629553432168}
   - component: {fileID: 4353209547321518310}
+  - component: {fileID: 6444486381005843127}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -247,3 +248,12 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!45 &6444486381005843127
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2645504115512630908}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}

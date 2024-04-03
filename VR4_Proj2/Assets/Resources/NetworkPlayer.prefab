@@ -551,7 +551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ecc4a3c7fe455545a61042ff781ab98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 40
+  movementSpeed: 10
   playerHeight: 0.92
   groundedMask:
     serializedVersion: 2
@@ -560,6 +560,9 @@ MonoBehaviour:
   currentGravity: 0
   maxSlopeAngle: 60
   onSlope: 0
+  Lvl1: {fileID: 1082096342517971368, guid: d6a038c10f5cde6409075e3e0cf07a6f, type: 3}
+  Lvl2: {fileID: 9064218421655409521, guid: ee0fbb93c2b43a049917540b1b5a5215, type: 3}
+  Lvl3: {fileID: 8649886561315250629, guid: 0f7f98ae250b5d3458656b7c5fd8be9f, type: 3}
 --- !u!114 &3254284965480147241
 MonoBehaviour:
   m_ObjectHideFlags: 0

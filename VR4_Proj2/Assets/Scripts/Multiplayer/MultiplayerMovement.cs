@@ -2,9 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.XR;
 using UnityEngine;
+using Photon.Pun;
+using static UnityEngine.GraphicsBuffer;
 
 public class MultiplayerMovement : MonoBehaviour
 {
+    private CollisionDetection myColDec;
+    private LogisticsManager myLogistics;
+    private Teleport myTeleport;
+    
+    private PhotonView myView;
+    private GameObject myChild;
+    
     private float xInput;
     private float zInput;
     public float movementSpeed = 5.0f;
@@ -29,36 +38,66 @@ public class MultiplayerMovement : MonoBehaviour
     Vector3 moveAmount;
     Vector3 smoothMoveVelocity;
 
+    // teleport spawners
+    public GameObject Lvl1;
+    public GameObject Lvl2;
+    public GameObject Lvl3;
+
     // Start is called before the first frame update
     void Start()
     {
+
+        myView = GetComponentInParent<PhotonView>();
         myXrOrigin = GameObject.Find("XR Origin (XR Rig)");
+        //GameObject myXrOrigin = GameObject.Find("XR Origin (XR Rig)");
         myRB = GetComponent<Rigidbody>();
         myXRRig = myXrOrigin.transform;
         inputData = myXrOrigin.GetComponent<InputData>();
+
+        GameObject logistics = GameObject.Find("LogisticsManager");
+        myLogistics = logistics.GetComponent<LogisticsManager>();
+
+        //myColDec = myChild.GetComponent<CollisionDetection>();
+        myTeleport = GetComponent<Teleport>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        myXRRig.position = transform.position + transform.up;
-        //myXRRig.rotation = transform.rotation;
+        
+        if (myView.IsMine)
+        {
+            myXRRig.position = transform.position + transform.up;
+            //myXRRig.rotation = transform.rotation;
 
-        // fetching 2D joystick input
-        if (inputData.leftController.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 movement))
-        {
-            xInput = movement.x;
-            zInput = movement.y;
-        } else
-        {
-            xInput = Input.GetAxis("Horizontal");
-            zInput = Input.GetAxis("Vertical");
+            // fetching 2D joystick input
+            if (inputData.leftController.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 movement))
+            {
+                xInput = movement.x;
+                zInput = movement.y;
+            }
+            else
+            {
+                xInput = Input.GetAxis("Horizontal");
+                zInput = Input.GetAxis("Vertical");
+            }
+
+            if (inputData.rightController.TryGetFeatureValue(CommonUsages.triggerButton, out bool t_pressed))
+            {
+                if (t_pressed) 
+                {
+                    //myTeleport.Island2();
+                   // Vector3 teleportPosition = Lvl2.gameObject.transform.position;
+                    Island2();
+                }
+            }
         }
-
+        
         // Smoothed xz-movement
         Vector3 moveDir = new Vector3(xInput, 0, zInput).normalized;
         Vector3 targetMoveAmount = moveDir * movementSpeed;
-        moveAmount = Vector3.SmoothDamp(movement, targetMoveAmount, ref smoothMoveVelocity, 0.15f);
+        // moveAmount = Vector3.SmoothDamp(movement, targetMoveAmount, ref smoothMoveVelocity, 0.15f);
+        moveAmount = Vector3.SmoothDamp(moveAmount, targetMoveAmount, ref smoothMoveVelocity, 0.15f);
 
         // Ground check
         Vector3 playerHeightOffset = new Vector3(0.0f, 1.0f, 0.0f);
@@ -113,5 +152,25 @@ public class MultiplayerMovement : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void Island1()
+    {
+        // teleport
+        transform.position = Lvl1.gameObject.transform.position;
+    }
+
+    public void Island2()
+    {
+        // teleport
+        transform.position = Lvl2.gameObject.transform.position;
+        
+
+    }
+
+    public void Island3()
+    {
+        // teleport
+        transform.position = Lvl3.gameObject.transform.position;
     }
 }
