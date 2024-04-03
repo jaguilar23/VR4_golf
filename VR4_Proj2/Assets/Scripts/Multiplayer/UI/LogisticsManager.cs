@@ -8,10 +8,17 @@ public class LogisticsManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI myCurrentScoreText;
 
+    [SerializeField] int currentCourse = 1;
     [SerializeField] private int currentScore = 0;
+    [SerializeField] private int[] scores = new int[3];  // for scoreboard
     private string scoreText = "Current score: ";
 
     public bool collisionFound = false;
+
+    public int playerID;
+
+    [Header("Golf Club Spawn Locations")]
+    [SerializeField] private GameObject[] putterSpawnLocations = new GameObject[4]; // four locations a putter can be instantiated
 
     // Start is called before the first frame update
     void Start()
@@ -29,5 +36,13 @@ public class LogisticsManager : MonoBehaviour
 
             collisionFound = false;
         }
+    }
+
+    public void setPlayerID()
+    {
+        // set playerID based on players on server
+        var numPlayers = GameObject.FindGameObjectsWithTag("Player");
+
+        playerID = numPlayers.Length + 1;
     }
 }

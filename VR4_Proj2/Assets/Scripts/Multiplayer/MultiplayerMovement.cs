@@ -10,9 +10,14 @@ public class MultiplayerMovement : MonoBehaviour
     private CollisionDetection myColDec;
     private LogisticsManager myLogistics;
     private Teleport myTeleport;
-    
+
+    [Header ("Personal Putter and Ball")]
+    GameObject putterSpawnSpot;
+    GameObject ballSpawnSpot;
+    public GameObject playerPutter;
+    public GameObject playerBall;
+
     private PhotonView myView;
-    private GameObject myChild;
     
     private float xInput;
     private float zInput;
@@ -50,12 +55,19 @@ public class MultiplayerMovement : MonoBehaviour
         myView = GetComponentInParent<PhotonView>();
         myXrOrigin = GameObject.Find("XR Origin (XR Rig)");
         //GameObject myXrOrigin = GameObject.Find("XR Origin (XR Rig)");
-        myRB = GetComponent<Rigidbody>();
+        myRB = GetComponentInChildren<Rigidbody>();
         myXRRig = myXrOrigin.transform;
         inputData = myXrOrigin.GetComponent<InputData>();
 
+        // find logistics gameobject
         GameObject logistics = GameObject.Find("LogisticsManager");
         myLogistics = logistics.GetComponent<LogisticsManager>();
+        myLogistics.setPlayerID();
+        Debug.Log("Player ID: " + myLogistics.playerID);
+
+        // PlayerID specific objects
+        putterSpawnSpot = GameObject.Find("PutterSpawnSpots").gameObject.transform.GetChild(myLogistics.playerID-1).gameObject;
+        Instantiate(playerPutter, putterSpawnSpot.transform.position, putterSpawnSpot.transform.rotation); // instantiate putter at putterSpawnSpot (table)
 
         //myColDec = myChild.GetComponent<CollisionDetection>();
         myTeleport = GetComponent<Teleport>();
@@ -67,7 +79,7 @@ public class MultiplayerMovement : MonoBehaviour
         
         if (myView.IsMine)
         {
-            myXRRig.position = transform.position + transform.up;
+            myXRRig.position = transform.GetChild(0).transform.position + transform.up;
             //myXRRig.rotation = transform.rotation;
 
             // fetching 2D joystick input
@@ -78,6 +90,7 @@ public class MultiplayerMovement : MonoBehaviour
             }
             else
             {
+                // keyboard/controller input
                 xInput = Input.GetAxis("Horizontal");
                 zInput = Input.GetAxis("Vertical");
             }
