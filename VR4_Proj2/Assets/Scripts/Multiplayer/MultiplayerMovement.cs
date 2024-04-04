@@ -55,7 +55,7 @@ public class MultiplayerMovement : MonoBehaviour
         myView = GetComponentInParent<PhotonView>();
         myXrOrigin = GameObject.Find("XR Origin (XR Rig)");
         //GameObject myXrOrigin = GameObject.Find("XR Origin (XR Rig)");
-        myRB = GetComponentInChildren<Rigidbody>();
+        myRB = GetComponent<Rigidbody>();
         myXRRig = myXrOrigin.transform;
         inputData = myXrOrigin.GetComponent<InputData>();
 
@@ -79,7 +79,7 @@ public class MultiplayerMovement : MonoBehaviour
         
         if (myView.IsMine)
         {
-            myXRRig.position = transform.GetChild(0).transform.position + transform.up;
+            myXRRig.position = transform.position + transform.up * 1.6f;
             //myXRRig.rotation = transform.rotation;
 
             // fetching 2D joystick input

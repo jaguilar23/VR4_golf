@@ -579,7 +579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPutter: {fileID: 4208968603298819288, guid: 935d1ddcefa7e3546832b8fcd40d3964, type: 3}
   playerBall: {fileID: 2645504115512630908, guid: 31c7d4ba2a30c154595492812898288a, type: 3}
-  movementSpeed: 10
+  movementSpeed: 5
   playerHeight: 0.1
   groundedMask:
     serializedVersion: 2
