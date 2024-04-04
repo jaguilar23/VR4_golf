@@ -70,7 +70,7 @@ public class MultiplayerMovement : MonoBehaviour
         Instantiate(playerPutter, putterSpawnSpot.transform.position, putterSpawnSpot.transform.rotation); // instantiate putter at putterSpawnSpot (table)
 
         //myColDec = myChild.GetComponent<CollisionDetection>();
-        myTeleport = GetComponent<Teleport>();
+        //myTeleport = GetComponent<Teleport>();
     }
 
     // Update is called once per frame

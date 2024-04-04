@@ -219,7 +219,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 661500268134028002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ecc4a3c7fe455545a61042ff781ab98, type: 3}
   m_Name: 
@@ -474,6 +474,7 @@ GameObject:
   - component: {fileID: 5353177495916779372}
   - component: {fileID: 6970316697445926441}
   - component: {fileID: 4295301657803857265}
+  - component: {fileID: 951516597911914349}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -564,6 +565,32 @@ CapsuleCollider:
   m_Height: 0.58
   m_Direction: 1
   m_Center: {x: 0, y: 0.285, z: 0}
+--- !u!114 &951516597911914349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3453841651000308543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ecc4a3c7fe455545a61042ff781ab98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPutter: {fileID: 4208968603298819288, guid: 935d1ddcefa7e3546832b8fcd40d3964, type: 3}
+  playerBall: {fileID: 2645504115512630908, guid: 31c7d4ba2a30c154595492812898288a, type: 3}
+  movementSpeed: 10
+  playerHeight: 0.1
+  groundedMask:
+    serializedVersion: 2
+    m_Bits: 8
+  grounded: 0
+  currentGravity: 0
+  maxSlopeAngle: 0
+  onSlope: 0
+  Lvl1: {fileID: 0}
+  Lvl2: {fileID: 0}
+  Lvl3: {fileID: 0}
 --- !u!1 &3589564429353565977
 GameObject:
   m_ObjectHideFlags: 0

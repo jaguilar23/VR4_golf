@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1598226629553432168}
   - component: {fileID: 4353209547321518310}
   - component: {fileID: 6444486381005843127}
+  - component: {fileID: 620131670400999749}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -257,3 +258,16 @@ Skybox:
   m_GameObject: {fileID: 2645504115512630908}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 0}
+--- !u!114 &620131670400999749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2645504115512630908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af3c80b5c19d68f47ab945bb40becf4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballSpawn: {fileID: 7862825418723521216, guid: 5fc4a629fe4ebac498bb54309282119b, type: 3}
