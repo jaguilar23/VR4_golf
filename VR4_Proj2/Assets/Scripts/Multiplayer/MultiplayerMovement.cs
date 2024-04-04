@@ -10,6 +10,7 @@ public class MultiplayerMovement : MonoBehaviour
     private CollisionDetection myColDec;
     private LogisticsManager myLogistics;
     private Teleport myTeleport;
+    private SkinnedMeshRenderer bodyMeshRender;
 
     [Header ("Personal Putter and Ball")]
     GameObject putterSpawnSpot;
@@ -59,6 +60,10 @@ public class MultiplayerMovement : MonoBehaviour
         myXRRig = myXrOrigin.transform;
         inputData = myXrOrigin.GetComponent<InputData>();
 
+        // skinned mesh
+        GameObject childBodyObj = transform.GetChild(0).transform.GetChild(0).gameObject;
+        bodyMeshRender = childBodyObj.GetComponent<SkinnedMeshRenderer>();
+
         // find logistics gameobject
         GameObject logistics = GameObject.Find("LogisticsManager");
         myLogistics = logistics.GetComponent<LogisticsManager>();
@@ -68,6 +73,10 @@ public class MultiplayerMovement : MonoBehaviour
         // PlayerID specific objects
         putterSpawnSpot = GameObject.Find("PutterSpawnSpots").gameObject.transform.GetChild(myLogistics.playerID-1).gameObject;
         Instantiate(playerPutter, putterSpawnSpot.transform.position, putterSpawnSpot.transform.rotation); // instantiate putter at putterSpawnSpot (table)
+
+        // Spawn Ball
+        ballSpawnSpot = GameObject.Find("BallSpawnSpots").gameObject.transform.GetChild(myLogistics.currentCourse - 1).gameObject; // spawns ball by currentCourse
+        Instantiate(playerBall, ballSpawnSpot.transform.position, Quaternion.identity); // instantiate golf ball at ballSpawnSpot
 
         //myColDec = myChild.GetComponent<CollisionDetection>();
         //myTeleport = GetComponent<Teleport>();
@@ -79,6 +88,7 @@ public class MultiplayerMovement : MonoBehaviour
         
         if (myView.IsMine)
         {
+            bodyMeshRender.enabled = false;
             myXRRig.position = transform.position + transform.up * 1.6f;
             //myXRRig.rotation = transform.rotation;
 
@@ -104,33 +114,33 @@ public class MultiplayerMovement : MonoBehaviour
                     Island2();
                 }
             }
-        }
-        
-        // Smoothed xz-movement
-        Vector3 moveDir = new Vector3(xInput, 0, zInput).normalized;
-        Vector3 targetMoveAmount = moveDir * movementSpeed;
-        // moveAmount = Vector3.SmoothDamp(movement, targetMoveAmount, ref smoothMoveVelocity, 0.15f);
-        moveAmount = Vector3.SmoothDamp(moveAmount, targetMoveAmount, ref smoothMoveVelocity, 0.15f);
+            
+            // Smoothed xz-movement
+            Vector3 moveDir = new Vector3(xInput, 0, zInput).normalized;
+            Vector3 targetMoveAmount = moveDir * movementSpeed;
+            // moveAmount = Vector3.SmoothDamp(movement, targetMoveAmount, ref smoothMoveVelocity, 0.15f);
+            moveAmount = Vector3.SmoothDamp(moveAmount, targetMoveAmount, ref smoothMoveVelocity, 0.15f);
 
-        // Ground check
-        Vector3 playerHeightOffset = new Vector3(0.0f, 1.0f, 0.0f);
-        Ray ray = new Ray(transform.position + playerHeightOffset, -transform.up);
-        RaycastHit hit;
+            // Ground check
+            Vector3 playerHeightOffset = new Vector3(0.0f, 1.0f, 0.0f);
+            Ray ray = new Ray(transform.position + playerHeightOffset, -transform.up);
+            RaycastHit hit;
 
-        // rotate with XR
-        if (inputData.Device.TryGetFeatureValue(CommonUsages.deviceRotation, out Quaternion rotD))
-        {
-            Vector3 eulerRotation = new Vector3(transform.eulerAngles.x, rotD.eulerAngles.y, transform.eulerAngles.z);
-            transform.rotation = Quaternion.Euler(eulerRotation);
-        }
-        else
-        {
-            GameObject cameraTransform = myXrOrigin.transform.GetChild(0).GetChild(0).gameObject;
-            Vector3 eulerRotation = new Vector3(transform.eulerAngles.x, myXRRig.eulerAngles.y, transform.eulerAngles.z);
-            transform.rotation = Quaternion.Euler(eulerRotation);
-        }
+            // rotate with XR
+            if (inputData.Device.TryGetFeatureValue(CommonUsages.deviceRotation, out Quaternion rotD))
+            {
+                Vector3 eulerRotation = new Vector3(transform.eulerAngles.x, rotD.eulerAngles.y, transform.eulerAngles.z);
+                transform.rotation = Quaternion.Euler(eulerRotation);
+            }
+            else
+            {
+                GameObject cameraTransform = myXrOrigin.transform.GetChild(0).GetChild(0).gameObject;
+                Vector3 eulerRotation = new Vector3(transform.eulerAngles.x, myXRRig.eulerAngles.y, transform.eulerAngles.z);
+                transform.rotation = Quaternion.Euler(eulerRotation);
+            }
 
-        grounded = (Physics.Raycast(ray, out hit, playerHeight + 0.1f, groundedMask)) ? true : false;
+            grounded = (Physics.Raycast(ray, out hit, playerHeight + 0.1f, groundedMask)) ? true : false;
+        }
     }
 
     private void FixedUpdate()

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7117451530092443583}
   - component: {fileID: 5201085986612558445}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7602926131865842872}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AnchorPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,6 +151,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 726fa280f27c8d343bf73d181be8a1e1, type: 3}
       propertyPath: m_Name
       value: putter
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 726fa280f27c8d343bf73d181be8a1e1, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

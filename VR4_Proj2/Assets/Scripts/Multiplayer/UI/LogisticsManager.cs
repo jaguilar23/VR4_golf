@@ -8,7 +8,7 @@ public class LogisticsManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI myCurrentScoreText;
 
-    [SerializeField] int currentCourse = 1;
+    [SerializeField] public int currentCourse = 1;
     [SerializeField] private int currentScore = 0;
     [SerializeField] private int[] scores = new int[3];  // for scoreboard
     private string scoreText = "Current score: ";
