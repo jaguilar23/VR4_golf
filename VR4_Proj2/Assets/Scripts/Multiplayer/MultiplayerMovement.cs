@@ -76,7 +76,9 @@ public class MultiplayerMovement : MonoBehaviour
 
         // Spawn Ball
         ballSpawnSpot = GameObject.Find("BallSpawnSpots").gameObject.transform.GetChild(myLogistics.currentCourse - 1).gameObject; // spawns ball by currentCourse
+        //playerBall.GetComponent<BallManager>().setLayer(playerPutter.layer);
         Instantiate(playerBall, ballSpawnSpot.transform.position, Quaternion.identity); // instantiate golf ball at ballSpawnSpot
+
 
         //myColDec = myChild.GetComponent<CollisionDetection>();
         //myTeleport = GetComponent<Teleport>();
