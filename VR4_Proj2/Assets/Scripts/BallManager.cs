@@ -51,8 +51,10 @@ public class BallManager : MonoBehaviour
     {
         rb.constraints = RigidbodyConstraints.None; // Allow the ball to freely move
         rb.velocity = vel;  // Set the ball's velocity the same as the putter upon contact
+        Debug.Log("Ball Hit");
         numHits++;          // Increment the total number of hits by 1
-
+        Debug.Log("num hit increases");
+        
         isMoving = true;
     }
 

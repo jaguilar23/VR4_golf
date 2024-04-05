@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballSpawn: {fileID: 7862825418723521216, guid: 5fc4a629fe4ebac498bb54309282119b, type: 3}
+  yesBtn: {fileID: 6664136708274092128, guid: 54bca1b5fd322754283d867d840b403d, type: 3}
 --- !u!114 &2396478248344728263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +285,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce4ac2ba7a2f364da777b88315a4d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  putterLayer:
-    serializedVersion: 2
-    m_Bits: 64
+  putterLayer: 0
   numHits: 0
