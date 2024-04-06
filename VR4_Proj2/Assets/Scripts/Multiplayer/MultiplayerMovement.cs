@@ -4,6 +4,7 @@ using UnityEngine.XR;
 using UnityEngine;
 using Photon.Pun;
 using static UnityEngine.GraphicsBuffer;
+using UnityEngine.Playables;
 
 public class MultiplayerMovement : MonoBehaviour
 {
@@ -15,8 +16,8 @@ public class MultiplayerMovement : MonoBehaviour
     [Header ("Personal Putter and Ball")]
     GameObject putterSpawnSpot;
     GameObject ballSpawnSpot;
-    public GameObject playerPutter;
-    public GameObject playerBall;
+    public GameObject playerPutter;     // putter prefab
+    public GameObject playerBall;       // ball prefab
 
     private PhotonView myView;
     
@@ -44,11 +45,6 @@ public class MultiplayerMovement : MonoBehaviour
     Vector3 moveAmount;
     Vector3 smoothMoveVelocity;
 
-    // teleport spawners
-    public GameObject Lvl1;
-    public GameObject Lvl2;
-    public GameObject Lvl3;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -67,18 +63,17 @@ public class MultiplayerMovement : MonoBehaviour
         // find logistics gameobject
         GameObject logistics = GameObject.Find("LogisticsManager");
         myLogistics = logistics.GetComponent<LogisticsManager>();
+        myLogistics.setPlayerObj(this.gameObject);
         myLogistics.setPlayerID();
         Debug.Log("Player ID: " + myLogistics.playerID);
 
         // PlayerID specific objects
         putterSpawnSpot = GameObject.Find("PutterSpawnSpots").gameObject.transform.GetChild(myLogistics.playerID-1).gameObject;
-        Instantiate(playerPutter, putterSpawnSpot.transform.position, putterSpawnSpot.transform.rotation); // instantiate putter at putterSpawnSpot (table)
+        myLogistics.setPutter(Instantiate(playerPutter, putterSpawnSpot.transform.position, putterSpawnSpot.transform.rotation));  // instantiate putter at putterSpawnSpot (table)
 
         // Spawn Ball
         ballSpawnSpot = GameObject.Find("BallSpawnSpots").gameObject.transform.GetChild(myLogistics.currentCourse - 1).gameObject; // spawns ball by currentCourse
-        //playerBall.GetComponent<BallManager>().setLayer(playerPutter.layer);
-        Instantiate(playerBall, ballSpawnSpot.transform.position, Quaternion.identity); // instantiate golf ball at ballSpawnSpot
-
+        myLogistics.setBall(Instantiate(playerBall, ballSpawnSpot.transform.position, Quaternion.identity));  // instantiate putter at putterSpawnSpot (table)
 
         //myColDec = myChild.GetComponent<CollisionDetection>();
         //myTeleport = GetComponent<Teleport>();
@@ -113,10 +108,20 @@ public class MultiplayerMovement : MonoBehaviour
                 {
                     //myTeleport.Island2();
                    // Vector3 teleportPosition = Lvl2.gameObject.transform.position;
-                    Island2();
+                    //Island2();
                 }
             }
-            
+
+            // Fetch location of left and right hands
+            if (inputData.leftController.TryGetFeatureValue(CommonUsages.devicePosition, out Vector3 leftPos))
+            {
+                myView.RPC("setLeftHand", RpcTarget.Others, leftPos);
+            }
+            if (inputData.rightController.TryGetFeatureValue(CommonUsages.devicePosition, out Vector3 rightPos))
+            {
+                myView.RPC("setRightHand", RpcTarget.Others, rightPos);
+            }
+
             // Smoothed xz-movement
             Vector3 moveDir = new Vector3(xInput, 0, zInput).normalized;
             Vector3 targetMoveAmount = moveDir * movementSpeed;
@@ -179,23 +184,17 @@ public class MultiplayerMovement : MonoBehaviour
         return false;
     }
 
-    public void Island1()
+    [PunRPC]
+    void setLeftHand(Vector3 leftHand)
     {
-        // teleport
-        transform.position = Lvl1.gameObject.transform.position;
+        myLogistics.leftHand.transform.position = leftHand;
     }
 
-    public void Island2()
+    [PunRPC]
+    void setRighttHand(Vector3 rightHand)
     {
-        // teleport
-        transform.position = Lvl2.gameObject.transform.position;
-        
-
+        myLogistics.leftHand.transform.position = rightHand;
     }
 
-    public void Island3()
-    {
-        // teleport
-        transform.position = Lvl3.gameObject.transform.position;
-    }
+    
 }

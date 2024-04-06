@@ -5,6 +5,8 @@ using UnityEngine;
 public class BallManager : MonoBehaviour
 {
     public int putterLayer;
+    public int ballLayer;               // ball can be hit by putter in this layer
+    private int movingBallLayer = 15;   // ball can't be hit again while moving in this layer
     private Rigidbody rb;
     public int numHits = 0; // number of times the ball was hit
 
@@ -13,14 +15,14 @@ public class BallManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        putterLayer = LayerMask.NameToLayer("Putter");
+        putterLayer = LayerMask.NameToLayer("Putter1");
         rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
         // Check if ball is moving and is extremely slow
-        if (isMoving && rb.velocity.magnitude < 0.01f)
+        if (isMoving && rb.velocity.magnitude < 0.05f)
         {
             stopMove();
         }
@@ -54,13 +56,17 @@ public class BallManager : MonoBehaviour
         Debug.Log("Ball Hit");
         numHits++;          // Increment the total number of hits by 1
         Debug.Log("num hit increases");
-        
+
+        this.gameObject.layer = movingBallLayer;
+
         isMoving = true;
     }
 
-    void stopMove()
+    public void stopMove()
     {
         rb.constraints = RigidbodyConstraints.FreezeAll;    // Freeze ball in place
+
+        this.gameObject.layer = ballLayer;
 
         isMoving = false;
     }

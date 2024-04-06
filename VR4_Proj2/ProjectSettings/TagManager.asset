@@ -11,17 +11,17 @@ TagManager:
   - Ground
   - Water
   - UI
-  - Putter
   - Player
-  - Ball
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Putter1
+  - Putter2
+  - Putter3
+  - Putter4
+  - Ball1
+  - Ball2
+  - Ball3
+  - Ball4
+  - MovingBall
+  - Rockwall
   - 
   - 
   - 

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7892266892499748188}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bodyJnt_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7763687247560512233}
   - component: {fileID: 8402207120634316886}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: left_Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 163022986517814989}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bodyJnt_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,8 +165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 961908340369187237}
   - component: {fileID: 9192073789450870842}
-  - component: {fileID: 7666640529133073390}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: NetworkPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,32 +211,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7666640529133073390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 661500268134028002}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ecc4a3c7fe455545a61042ff781ab98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPutter: {fileID: 4208968603298819288, guid: 935d1ddcefa7e3546832b8fcd40d3964, type: 3}
-  playerBall: {fileID: 2645504115512630908, guid: 31c7d4ba2a30c154595492812898288a, type: 3}
-  movementSpeed: 10
-  playerHeight: 0.92
-  groundedMask:
-    serializedVersion: 2
-    m_Bits: 8
-  grounded: 0
-  currentGravity: 0
-  maxSlopeAngle: 60
-  onSlope: 0
-  Lvl1: {fileID: 1082096342517971368, guid: d6a038c10f5cde6409075e3e0cf07a6f, type: 3}
-  Lvl2: {fileID: 9064218421655409521, guid: ee0fbb93c2b43a049917540b1b5a5215, type: 3}
-  Lvl3: {fileID: 8649886561315250629, guid: 0f7f98ae250b5d3458656b7c5fd8be9f, type: 3}
 --- !u!1 &1787098997998731451
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6558949011556452974}
   - component: {fileID: 9074167541666398803}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: right_Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6159774675196418437}
   - component: {fileID: 8379116919237899263}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,7 +413,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1617801307656692731}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: BaseJNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -475,7 +448,7 @@ GameObject:
   - component: {fileID: 6970316697445926441}
   - component: {fileID: 4295301657803857265}
   - component: {fileID: 951516597911914349}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -588,9 +561,6 @@ MonoBehaviour:
   currentGravity: 0
   maxSlopeAngle: 0
   onSlope: 0
-  Lvl1: {fileID: 0}
-  Lvl2: {fileID: 0}
-  Lvl3: {fileID: 0}
 --- !u!1 &3589564429353565977
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,7 +570,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6605900844255810885}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bodyJnt_07
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,7 +602,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7747362820208331529}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: JNTS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,7 +638,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1100736042206758203}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: armJnt_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -699,7 +669,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6817654033379223309}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: armJnt_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -730,7 +700,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4504954480148683623}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: baseCharacter_mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -762,7 +732,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 16448537530801125}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: topJNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,7 +763,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5487192434446138189}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bodyJnt_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -825,7 +795,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1057412484601707424}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bodyJnt_08
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -857,7 +827,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8934809976276911251}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bodyJnt_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -889,7 +859,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8639360981952229374}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bodyJnt_06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -921,7 +891,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3247204409342197581}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bodyJnt_09
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -953,7 +923,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8752270130599990138}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: HeadJnt_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -984,7 +954,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7156577884475709595}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: neckJnt_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1016,7 +986,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1062154350809186376}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bodyJnt_05
   m_TagString: Untagged
   m_Icon: {fileID: 0}

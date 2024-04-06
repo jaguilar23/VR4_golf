@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6444486381005843127}
   - component: {fileID: 620131670400999749}
   - component: {fileID: 2396478248344728263}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6e88b446aec535b44babe1be53656c48, type: 2}
+  - {fileID: 2100000, guid: 1dee708b9acb73a45a77f46f75c8d1e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,7 +96,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2645504115512630908}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 95050ea7865e7ed429cfd407624c269f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -118,8 +118,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2645504115512630908}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0.25
+  m_Mass: 3
+  m_Drag: 0.4
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -272,7 +272,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballSpawn: {fileID: 7862825418723521216, guid: 5fc4a629fe4ebac498bb54309282119b, type: 3}
-  yesBtn: {fileID: 6664136708274092128, guid: 54bca1b5fd322754283d867d840b403d, type: 3}
 --- !u!114 &2396478248344728263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,5 +284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce4ac2ba7a2f364da777b88315a4d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  putterLayer: 0
+  putterLayer: 7
+  ballLayer: 11
   numHits: 0
