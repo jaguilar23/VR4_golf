@@ -13,6 +13,7 @@ public class LogisticsManager : MonoBehaviour
     [SerializeField] private int currentScore = 0;
     [SerializeField] private int[] scores = new int[3];  // for scoreboard
     [SerializeField] private TextMeshProUGUI[] coursesScoreText = new TextMeshProUGUI[3]; // text for scoreboard
+    [SerializeField] private TextMeshProUGUI totalScore;
     //private string scoreText = "Current score: ";
 
     public bool collisionFound = false;
@@ -102,5 +103,15 @@ public class LogisticsManager : MonoBehaviour
         // what
         scores[currentCourse - 1] = myBall.transform.GetChild(0).GetComponent<BallManager>().numHits;
         coursesScoreText[currentCourse - 1].text = "Level " + currentCourse.ToString() + ": " + scores[currentCourse - 1].ToString();
+
+        int count = 0;
+        for (int i = 0; i < scores.Length; i++)
+        {
+            count += scores[0];
+        }
+
+        totalScore.text = "Total score: " + count.ToString();
     }
+
+
 }

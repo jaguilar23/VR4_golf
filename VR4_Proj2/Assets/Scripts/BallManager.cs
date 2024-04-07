@@ -48,7 +48,7 @@ public class BallManager : MonoBehaviour
         {
             // speed of the putter upon contact
             Vector3 putterVelocity = collision.gameObject.GetComponent<Rigidbody>().velocity;
-            
+
             // check if the putter's force is powerful enough
             if (putterVelocity.magnitude > 0.3f)
             {
