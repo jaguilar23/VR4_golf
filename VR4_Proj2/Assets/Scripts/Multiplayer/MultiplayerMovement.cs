@@ -12,12 +12,15 @@ public class MultiplayerMovement : MonoBehaviour
     private LogisticsManager myLogistics;
     private Teleport myTeleport;
     private SkinnedMeshRenderer bodyMeshRender;
-
-    [Header ("Personal Putter and Ball")]
-    GameObject putterSpawnSpot;
-    GameObject ballSpawnSpot;
+    
     public GameObject playerPutter;     // putter prefab
     public GameObject playerBall;       // ball prefab
+
+    /*
+    [Header("Player Device Hands")]
+    public GameObject leftHand;
+    public GameObject rightHand;
+     */
 
     private PhotonView myView;
     
@@ -65,15 +68,18 @@ public class MultiplayerMovement : MonoBehaviour
         myLogistics = logistics.GetComponent<LogisticsManager>();
         myLogistics.setPlayerObj(this.gameObject);
         myLogistics.setPlayerID();
+
         Debug.Log("Player ID: " + myLogistics.playerID);
 
         // PlayerID specific objects
-        putterSpawnSpot = GameObject.Find("PutterSpawnSpots").gameObject.transform.GetChild(myLogistics.playerID-1).gameObject;
-        myLogistics.setPutter(Instantiate(playerPutter, putterSpawnSpot.transform.position, putterSpawnSpot.transform.rotation));  // instantiate putter at putterSpawnSpot (table)
+        //putterSpawnSpot = GameObject.Find("PutterSpawnSpots").gameObject.transform.GetChild(myLogistics.playerID-1).gameObject;
+        //myLogistics.setPutter(Instantiate(playerPutter, putterSpawnSpot.transform.position, putterSpawnSpot.transform.rotation));  // instantiate putter at putterSpawnSpot (table)
+        //PhotonNetwork.Instantiate("NetworkPutter", putterSpawnSpot.transform.position, putterSpawnSpot.transform.rotation);
 
         // Spawn Ball
-        ballSpawnSpot = GameObject.Find("BallSpawnSpots").gameObject.transform.GetChild(myLogistics.currentCourse - 1).gameObject; // spawns ball by currentCourse
-        myLogistics.setBall(Instantiate(playerBall, ballSpawnSpot.transform.position, Quaternion.identity));  // instantiate putter at putterSpawnSpot (table)
+        //ballSpawnSpot = GameObject.Find("BallSpawnSpots").gameObject.transform.GetChild(myLogistics.currentCourse - 1).gameObject; // spawns ball by currentCourse
+        //myLogistics.setBall(Instantiate(playerBall, ballSpawnSpot.transform.position, Quaternion.identity));  // instantiate putter at putterSpawnSpot (table)
+        //PhotonNetwork.Instantiate("NetworkBall", ballSpawnSpot.transform.position, Quaternion.identity);
 
         //myColDec = myChild.GetComponent<CollisionDetection>();
         //myTeleport = GetComponent<Teleport>();
@@ -82,6 +88,17 @@ public class MultiplayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Check if myLogistics has ball set
+        if (myLogistics.myBall == null)
+        {
+            // Fetch designated ball
+            GameObject myBall = GameObject.Find("NetworkBall(Clone)");
+            myBall.name = "Ball" + myLogistics.playerID.ToString();
+            myLogistics.setBall(myBall);
+
+            // ball layer
+            myLogistics.myBall.transform.GetChild(0).gameObject.layer = 10 + myLogistics.playerID;
+        }
         
         if (myView.IsMine)
         {
@@ -112,16 +129,6 @@ public class MultiplayerMovement : MonoBehaviour
                 }
             }
 
-            // Fetch location of left and right hands
-            if (inputData.leftController.TryGetFeatureValue(CommonUsages.devicePosition, out Vector3 leftPos))
-            {
-                myView.RPC("setLeftHand", RpcTarget.Others, leftPos);
-            }
-            if (inputData.rightController.TryGetFeatureValue(CommonUsages.devicePosition, out Vector3 rightPos))
-            {
-                myView.RPC("setRightHand", RpcTarget.Others, rightPos);
-            }
-
             // Smoothed xz-movement
             Vector3 moveDir = new Vector3(xInput, 0, zInput).normalized;
             Vector3 targetMoveAmount = moveDir * movementSpeed;
@@ -148,6 +155,18 @@ public class MultiplayerMovement : MonoBehaviour
 
             grounded = (Physics.Raycast(ray, out hit, playerHeight + 0.1f, groundedMask)) ? true : false;
         }
+
+        /*
+        // Fetch location of left and right hands
+        if (inputData.leftController.TryGetFeatureValue(CommonUsages.devicePosition, out Vector3 leftPos))
+        {
+            leftHand.transform.position = leftPos;
+        }
+        if (inputData.rightController.TryGetFeatureValue(CommonUsages.devicePosition, out Vector3 rightPos))
+        {
+            rightHand.transform.position = rightPos;
+        }
+         */
     }
 
     private void FixedUpdate()
@@ -184,6 +203,7 @@ public class MultiplayerMovement : MonoBehaviour
         return false;
     }
 
+    /*
     [PunRPC]
     void setLeftHand(Vector3 leftHand)
     {
@@ -196,5 +216,6 @@ public class MultiplayerMovement : MonoBehaviour
         myLogistics.leftHand.transform.position = rightHand;
     }
 
+     */
     
 }

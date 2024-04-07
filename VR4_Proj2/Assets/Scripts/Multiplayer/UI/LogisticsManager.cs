@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class LogisticsManager : MonoBehaviour
 {
@@ -11,19 +12,15 @@ public class LogisticsManager : MonoBehaviour
     [SerializeField] public int currentCourse = 1;
     [SerializeField] private int currentScore = 0;
     [SerializeField] private int[] scores = new int[3];  // for scoreboard
-    private string scoreText = "Current score: ";
+    [SerializeField] private TextMeshProUGUI[] coursesScoreText = new TextMeshProUGUI[3]; // text for scoreboard
+    //private string scoreText = "Current score: ";
 
     public bool collisionFound = false;
 
-    private GameObject playerObject;
+    public GameObject playerObject;
     public int playerID;
 
-    [Header("Player Device Hands")]
-    public GameObject leftHand;
-    public GameObject rightHand;
-
-    private GameObject myPutter;        // player's putter
-    private GameObject myBall;          // player's ball
+    public GameObject myBall;          // player's ball
 
     public bool restartButtonPressed = false;
 
@@ -40,7 +37,9 @@ public class LogisticsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Fetches score canvas text
+        //GameObject myXrOrigin = GameObject.Find("XR Origin (XR Rig)");
+        //scoreText = myXrOrigin.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -49,14 +48,13 @@ public class LogisticsManager : MonoBehaviour
         if (collisionFound)
         {
             currentScore++;
-            myCurrentScoreText.text = scoreText + currentScore.ToString();
+            //myCurrentScoreText.text = scoreText + currentScore.ToString();
 
             collisionFound = false;
         }
     }
 
     public void setPlayerObj(GameObject obj) { playerObject = obj; }
-    public void setPutter(GameObject putter) { myPutter = putter; }
     public void setBall(GameObject ball) { myBall = ball; }
 
     public void setPlayerID()
@@ -64,7 +62,7 @@ public class LogisticsManager : MonoBehaviour
         // set playerID based on players on server
         var numPlayers = GameObject.FindGameObjectsWithTag("Player");
 
-        playerID = numPlayers.Length + 1;
+        playerID = numPlayers.Length;
     }
 
     public void restartToggle()
@@ -76,17 +74,33 @@ public class LogisticsManager : MonoBehaviour
     {
         // teleport
         playerObject.transform.position = Lvl1.gameObject.transform.position;
+        currentCourse = 1;
     }
 
     public void Island2()
     {
         // teleport
         playerObject.transform.position = Lvl2.gameObject.transform.position;
+        currentCourse = 2;
     }
 
     public void Island3()
     {
         // teleport
         playerObject.transform.position = Lvl3.gameObject.transform.position;
+        currentCourse = 3;
+    }
+
+    public void setScore(int num)
+    {
+        // what
+        coursesScoreText[currentCourse - 1].text = "Level " + currentCourse.ToString() + ": " + num.ToString();
+    }
+
+    public void finalizeScore()
+    {
+        // what
+        scores[currentCourse - 1] = myBall.transform.GetChild(0).GetComponent<BallManager>().numHits;
+        coursesScoreText[currentCourse - 1].text = "Level " + currentCourse.ToString() + ": " + scores[currentCourse - 1].ToString();
     }
 }

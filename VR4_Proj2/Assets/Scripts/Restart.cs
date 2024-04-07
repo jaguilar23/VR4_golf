@@ -10,6 +10,8 @@ public class Restart : MonoBehaviour
 
     private InputData inputData;
     public GameObject ballSpawn;
+    public GameObject ballSpawn_Lvl2;
+    public GameObject ballSpawn_Lvl3;
 
     private LogisticsManager myLogistics;
 
@@ -54,10 +56,28 @@ public class Restart : MonoBehaviour
             }
              */
         }
-        
-        if (myLogistics.restartButtonPressed)
+        // restart ball to level 1
+        if (myLogistics.restartButtonPressed && myLogistics.currentCourse == 1)
         {
             teleportBall();
+            Debug.Log("ball moved");
+
+            myLogistics.restartButtonPressed = false;
+        }
+
+        // restart ball to level 2
+        if (myLogistics.restartButtonPressed && myLogistics.currentCourse == 2)
+        {
+            teleportBall2();
+            Debug.Log("ball moved");
+
+            myLogistics.restartButtonPressed = false;
+        }
+
+        // restart ball to level 3
+        if (myLogistics.restartButtonPressed && myLogistics.currentCourse == 3)
+        {
+            teleportBall3();
             Debug.Log("ball moved");
 
             myLogistics.restartButtonPressed = false;
@@ -67,6 +87,17 @@ public class Restart : MonoBehaviour
     public void teleportBall()
     {
         transform.position = ballSpawn.gameObject.transform.position;
+        gameObject.GetComponent<BallManager>().stopMove();
+    }
+
+    public void teleportBall2()
+    {
+        transform.position = ballSpawn_Lvl2.gameObject.transform.position;
+        gameObject.GetComponent<BallManager>().stopMove();
+    }
+    public void teleportBall3()
+    {
+        transform.position = ballSpawn_Lvl3.gameObject.transform.position;
         gameObject.GetComponent<BallManager>().stopMove();
     }
 }

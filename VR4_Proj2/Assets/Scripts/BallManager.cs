@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class BallManager : MonoBehaviour
 {
     public int putterLayer;
@@ -9,6 +9,10 @@ public class BallManager : MonoBehaviour
     private int movingBallLayer = 15;   // ball can't be hit again while moving in this layer
     private Rigidbody rb;
     public int numHits = 0; // number of times the ball was hit
+    
+    private PhotonView myView;
+
+    private LogisticsManager myLogistics;
 
     private bool isMoving = false;
 
@@ -17,12 +21,16 @@ public class BallManager : MonoBehaviour
     {
         putterLayer = LayerMask.NameToLayer("Putter1");
         rb = GetComponent<Rigidbody>();
+        myView = GetComponentInParent<PhotonView>();
+
+        GameObject logistics = GameObject.Find("LogisticsManager");
+        myLogistics = logistics.GetComponent<LogisticsManager>();
     }
 
     private void Update()
     {
         // Check if ball is moving and is extremely slow
-        if (isMoving && rb.velocity.magnitude < 0.05f)
+        if (isMoving && rb.velocity.magnitude < 0.1f)
         {
             stopMove();
         }
@@ -42,7 +50,7 @@ public class BallManager : MonoBehaviour
             Vector3 putterVelocity = collision.gameObject.GetComponent<Rigidbody>().velocity;
             
             // check if the putter's force is powerful enough
-            if (putterVelocity.magnitude > 0.1f)
+            if (putterVelocity.magnitude > 0.3f)
             {
                 setMove(putterVelocity);
             }
@@ -53,10 +61,8 @@ public class BallManager : MonoBehaviour
     {
         rb.constraints = RigidbodyConstraints.None; // Allow the ball to freely move
         rb.velocity = vel;  // Set the ball's velocity the same as the putter upon contact
-        Debug.Log("Ball Hit");
         numHits++;          // Increment the total number of hits by 1
-        Debug.Log("num hit increases");
-
+        myLogistics.setScore(numHits);
         this.gameObject.layer = movingBallLayer;
 
         isMoving = true;
