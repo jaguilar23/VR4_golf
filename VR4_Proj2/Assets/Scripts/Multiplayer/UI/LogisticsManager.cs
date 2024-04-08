@@ -76,6 +76,7 @@ public class LogisticsManager : MonoBehaviour
         // teleport
         playerObject.transform.position = Lvl1.gameObject.transform.position;
         currentCourse = 1;
+        restartButtonPressed = true;
     }
 
     public void Island2()
@@ -83,6 +84,7 @@ public class LogisticsManager : MonoBehaviour
         // teleport
         playerObject.transform.position = Lvl2.gameObject.transform.position;
         currentCourse = 2;
+        restartButtonPressed = true;
     }
 
     public void Island3()
@@ -90,6 +92,7 @@ public class LogisticsManager : MonoBehaviour
         // teleport
         playerObject.transform.position = Lvl3.gameObject.transform.position;
         currentCourse = 3;
+        restartButtonPressed = true;
     }
 
     public void setScore(int num)
@@ -107,10 +110,11 @@ public class LogisticsManager : MonoBehaviour
         int count = 0;
         for (int i = 0; i < scores.Length; i++)
         {
-            count += scores[0];
+            count += scores[i];
         }
 
-        totalScore.text = "Total score: " + count.ToString();
+        totalScore.text = "Total: " + count.ToString();
+        myBall.GetComponent<BallManager>().numHits = 0;
     }
 
 

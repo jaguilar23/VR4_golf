@@ -36,6 +36,5 @@ public class ScoreCollider : MonoBehaviour
         Debug.Log("SCORE!");
         myLogistics.finalizeScore();
         yield return new WaitForSeconds(5.0f);
-        ball.SetActive(false);
     }
 }

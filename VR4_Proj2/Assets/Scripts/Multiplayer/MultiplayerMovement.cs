@@ -92,12 +92,12 @@ public class MultiplayerMovement : MonoBehaviour
         if (myLogistics.myBall == null)
         {
             // Fetch designated ball
-            GameObject myBall = GameObject.Find("NetworkBall(Clone)");
+            GameObject myBall = GameObject.Find("NetworkBall(Clone)").transform.GetChild(0).gameObject;
             myBall.name = "Ball" + myLogistics.playerID.ToString();
             myLogistics.setBall(myBall);
 
             // ball layer
-            myLogistics.myBall.transform.GetChild(0).gameObject.layer = 10 + myLogistics.playerID;
+            myLogistics.myBall.layer = 10 + myLogistics.playerID;
         }
         
         if (myView.IsMine)

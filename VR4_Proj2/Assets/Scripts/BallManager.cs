@@ -30,7 +30,7 @@ public class BallManager : MonoBehaviour
     private void Update()
     {
         // Check if ball is moving and is extremely slow
-        if (isMoving && rb.velocity.magnitude < 0.1f)
+        if (isMoving && rb.velocity.magnitude < 0.25f)
         {
             stopMove();
         }
@@ -47,7 +47,8 @@ public class BallManager : MonoBehaviour
         if (!isMoving && collision.gameObject.layer == putterLayer)
         {
             // speed of the putter upon contact
-            Vector3 putterVelocity = collision.gameObject.GetComponent<Rigidbody>().velocity;
+            //Vector3 putterVelocity = collision.gameObject.GetComponent<Rigidbody>().velocity;
+            Vector3 putterVelocity = collision.gameObject.transform.GetChild(1).GetComponent<PutterVelocity>().vel;
 
             // check if the putter's force is powerful enough
             if (putterVelocity.magnitude > 0.3f)
@@ -59,11 +60,11 @@ public class BallManager : MonoBehaviour
     
     void setMove(Vector3 vel)
     {
+        this.gameObject.layer = movingBallLayer;
         rb.constraints = RigidbodyConstraints.None; // Allow the ball to freely move
         rb.velocity = vel;  // Set the ball's velocity the same as the putter upon contact
         numHits++;          // Increment the total number of hits by 1
         myLogistics.setScore(numHits);
-        this.gameObject.layer = movingBallLayer;
 
         isMoving = true;
     }
