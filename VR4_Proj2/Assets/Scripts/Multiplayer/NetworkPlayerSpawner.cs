@@ -22,8 +22,12 @@ public class NetworkPlayerSpawner : MonoBehaviourPunCallbacks
         ballSpawnSpot = GameObject.Find("BallSpawnSpots").gameObject.transform.GetChild(0).gameObject; // spawns ball by currentCourse
 
         spawnedPlayerObject = PhotonNetwork.Instantiate("NetworkPlayer", transform.position, transform.rotation);
+        spawnedPlayerObject.name = "Player" + PhotonNetwork.LocalPlayer.ActorNumber.ToString();
+        //spawnedPlayerObject.transform.GetChild(0).name = "Player" + PhotonNetwork.LocalPlayer.ActorNumber.ToString();
         //spawnedPutterObject = PhotonNetwork.Instantiate("NetworkPutter", putterSpawnSpot.transform.position, putterSpawnSpot.transform.rotation);
         spawnedBallObject = PhotonNetwork.Instantiate("NetworkBall", ballSpawnSpot.transform.position, Quaternion.identity);
+        spawnedBallObject.name = "Ball" + PhotonNetwork.LocalPlayer.ActorNumber.ToString();
+        //spawnedBallObject.transform.GetChild(0).name = "Ball" + PhotonNetwork.LocalPlayer.ActorNumber.ToString();
     }
 
     public override void OnLeftRoom()

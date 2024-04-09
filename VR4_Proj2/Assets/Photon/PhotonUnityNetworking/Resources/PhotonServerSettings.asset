@@ -41,6 +41,8 @@ MonoBehaviour:
   - RespawnSpaceship
   - setLeftHand
   - setRighttHand
+  - ballSetup
+  - playerSetup
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

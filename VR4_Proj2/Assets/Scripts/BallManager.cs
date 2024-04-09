@@ -16,6 +16,8 @@ public class BallManager : MonoBehaviour
 
     private bool isMoving = false;
 
+    private AudioSource ballAudioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,7 @@ public class BallManager : MonoBehaviour
 
         GameObject logistics = GameObject.Find("LogisticsManager");
         myLogistics = logistics.GetComponent<LogisticsManager>();
+        ballAudioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -67,6 +70,8 @@ public class BallManager : MonoBehaviour
         myLogistics.setScore(numHits);
 
         isMoving = true;
+
+        ballAudioSource.Play();
     }
 
     public void stopMove()

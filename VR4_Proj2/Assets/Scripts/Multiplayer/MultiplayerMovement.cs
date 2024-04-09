@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine.XR;
 using UnityEngine;
 using Photon.Pun;
-using static UnityEngine.GraphicsBuffer;
-using UnityEngine.Playables;
 
 public class MultiplayerMovement : MonoBehaviour
 {
@@ -16,13 +14,8 @@ public class MultiplayerMovement : MonoBehaviour
     public GameObject playerPutter;     // putter prefab
     public GameObject playerBall;       // ball prefab
 
-    /*
-    [Header("Player Device Hands")]
-    public GameObject leftHand;
-    public GameObject rightHand;
-     */
-
     private PhotonView myView;
+    int playerID;
     
     private float xInput;
     private float zInput;
@@ -66,12 +59,30 @@ public class MultiplayerMovement : MonoBehaviour
         // find logistics gameobject
         GameObject logistics = GameObject.Find("LogisticsManager");
         myLogistics = logistics.GetComponent<LogisticsManager>();
-        myLogistics.setPlayerObj(this.gameObject);
-        myLogistics.setPlayerID();
 
-        Debug.Log("Player ID: " + myLogistics.playerID);
+        playerID = PhotonNetwork.LocalPlayer.ActorNumber;
 
-        // PlayerID specific objects
+        //this.name = "Player" + playerID.ToString();
+        //this.transform.parent.name = "Player" + playerID.ToString();
+        this.transform.GetChild(0).transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material = myLogistics.playerColors[playerID - 1];
+
+        GameObject gameBall = GameObject.Find("Ball" + playerID).transform.GetChild(0).gameObject;
+        //gameBall.transform.parent.gameObject.name = "Ball" + playerID.ToString();
+        //gameBall.name = "Ball" + playerID.ToString();
+        gameBall.GetComponent<MeshRenderer>().material = myLogistics.ballColors[playerID - 1];
+        gameBall.layer = 10 + playerID;
+        if (myView.IsMine)
+        {
+            myLogistics.setPlayerObj(this.gameObject);
+            myLogistics.setBall(gameBall);
+        }
+
+        /*
+        // ball layer
+        myLogistics.myBall.layer = 10 + myLogistics.playerID;
+         */
+
+        // myLogistics.playerID specific objects
         //putterSpawnSpot = GameObject.Find("PutterSpawnSpots").gameObject.transform.GetChild(myLogistics.playerID-1).gameObject;
         //myLogistics.setPutter(Instantiate(playerPutter, putterSpawnSpot.transform.position, putterSpawnSpot.transform.rotation));  // instantiate putter at putterSpawnSpot (table)
         //PhotonNetwork.Instantiate("NetworkPutter", putterSpawnSpot.transform.position, putterSpawnSpot.transform.rotation);
@@ -88,17 +99,6 @@ public class MultiplayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Check if myLogistics has ball set
-        if (myLogistics.myBall == null)
-        {
-            // Fetch designated ball
-            GameObject myBall = GameObject.Find("NetworkBall(Clone)").transform.GetChild(0).gameObject;
-            myBall.name = "Ball" + myLogistics.playerID.ToString();
-            myLogistics.setBall(myBall);
-
-            // ball layer
-            myLogistics.myBall.layer = 10 + myLogistics.playerID;
-        }
         
         if (myView.IsMine)
         {
@@ -132,7 +132,6 @@ public class MultiplayerMovement : MonoBehaviour
             // Smoothed xz-movement
             Vector3 moveDir = new Vector3(xInput, 0, zInput).normalized;
             Vector3 targetMoveAmount = moveDir * movementSpeed;
-            // moveAmount = Vector3.SmoothDamp(movement, targetMoveAmount, ref smoothMoveVelocity, 0.15f);
             moveAmount = Vector3.SmoothDamp(moveAmount, targetMoveAmount, ref smoothMoveVelocity, 0.15f);
 
             // Ground check
@@ -155,6 +154,8 @@ public class MultiplayerMovement : MonoBehaviour
 
             grounded = (Physics.Raycast(ray, out hit, playerHeight + 0.1f, groundedMask)) ? true : false;
         }
+        //playerSetup();
+        //ballSetup();
 
         /*
         // Fetch location of left and right hands
@@ -205,15 +206,32 @@ public class MultiplayerMovement : MonoBehaviour
 
     /*
     [PunRPC]
-    void setLeftHand(Vector3 leftHand)
+    void playerSetup()
     {
-        myLogistics.leftHand.transform.position = leftHand;
+        if(myView.IsMine)
+        {
+            this.name = "Player" + playerID.ToString();
+            this.transform.parent.name = "Player" + playerID.ToString();
+            this.transform.GetChild(0).transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material = myLogistics.playerColors[playerID - 1];
+            myLogistics.setPlayerObj(this.gameObject);
+        }
     }
 
     [PunRPC]
-    void setRighttHand(Vector3 rightHand)
+    void ballSetup()
     {
-        myLogistics.leftHand.transform.position = rightHand;
+        if (myView.IsMine)
+        {
+            if (GameObject.Find("NetworkBall(Clone)") != null)
+            {
+                GameObject gameBall = GameObject.Find("NetworkBall(Clone)").transform.GetChild(0).gameObject;
+                gameBall.transform.parent.gameObject.name = "Ball" + playerID.ToString();
+                gameBall.name = "Ball" + playerID.ToString();
+                gameBall.GetComponent<MeshRenderer>().material = myLogistics.ballColors[playerID - 1];
+                gameBall.layer = 10 + playerID;
+                myLogistics.setBall(gameBall);
+            }
+        }
     }
 
      */

@@ -11,12 +11,14 @@ public class LogisticsManager : MonoBehaviour
 
     [SerializeField] public int currentCourse = 1;
     [SerializeField] private int currentScore = 0;
-    [SerializeField] private int[] scores = new int[3];  // for scoreboard
     [SerializeField] private TextMeshProUGUI[] coursesScoreText = new TextMeshProUGUI[3]; // text for scoreboard
+    [SerializeField] private int[] scores = new int[3];  // for scoreboard
     [SerializeField] private TextMeshProUGUI totalScore;
+    [SerializeField] private TextMeshProUGUI winText;
     //private string scoreText = "Current score: ";
 
     public bool collisionFound = false;
+    bool isFinished = false; // check if game is finished
 
     public GameObject playerObject;
     public int playerID;
@@ -30,7 +32,8 @@ public class LogisticsManager : MonoBehaviour
     public GameObject Lvl2;
     public GameObject Lvl3;
 
-    [SerializeField] public Material[] ballColors = new Material[4];
+    [SerializeField] public Material[] ballColors = new Material[3];
+    [SerializeField] public Material[] playerColors = new Material[3];
 
     [Header("Golf Club Spawn Locations")]
     [SerializeField] private GameObject[] putterSpawnLocations = new GameObject[4]; // four locations a putter can be instantiated
@@ -53,6 +56,23 @@ public class LogisticsManager : MonoBehaviour
 
             collisionFound = false;
         }
+
+        foreach (int score in scores)
+        {
+            if (score == 0)
+            {
+                isFinished = false;
+                break;
+            } else
+            {
+                isFinished = true;
+            }
+        }
+
+        if (isFinished)
+        {
+            winText.gameObject.SetActive(true);
+        }
     }
 
     public void setPlayerObj(GameObject obj) { playerObject = obj; }
@@ -61,9 +81,9 @@ public class LogisticsManager : MonoBehaviour
     public void setPlayerID()
     {
         // set playerID based on players on server
-        var numPlayers = GameObject.FindGameObjectsWithTag("Player");
+        //var numPlayers = GameObject.FindGameObjectsWithTag("Player");
 
-        playerID = numPlayers.Length;
+        //playerID = numPlayers.Length;
     }
 
     public void restartToggle()
@@ -71,28 +91,48 @@ public class LogisticsManager : MonoBehaviour
         restartButtonPressed = true;
     }
 
+    public void newIslandToggle()
+    {
+        restartButtonPressed = true;
+        myBall.GetComponent<BallManager>().numHits = 0;
+    }
+
     public void Island1()
     {
         // teleport
-        playerObject.transform.position = Lvl1.gameObject.transform.position;
-        currentCourse = 1;
-        restartButtonPressed = true;
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        for (int i = 0; i < players.Length; i++)
+        {
+        }
+        if (playerObject != null)
+        {
+            playerObject.transform.position = Lvl1.gameObject.transform.position;
+            currentCourse = 1;
+            restartButtonPressed = true;
+        }
     }
 
     public void Island2()
     {
         // teleport
-        playerObject.transform.position = Lvl2.gameObject.transform.position;
-        currentCourse = 2;
-        restartButtonPressed = true;
+        if (playerObject != null)
+        {
+            playerObject.transform.position = Lvl2.gameObject.transform.position;
+            currentCourse = 2;
+            restartButtonPressed = true;
+        }
     }
 
     public void Island3()
     {
-        // teleport
-        playerObject.transform.position = Lvl3.gameObject.transform.position;
-        currentCourse = 3;
-        restartButtonPressed = true;
+        if (playerObject != null)
+        {
+            // teleport
+            playerObject.transform.position = Lvl3.gameObject.transform.position;
+            currentCourse = 3;
+            restartButtonPressed = true;
+        }
     }
 
     public void setScore(int num)
@@ -104,7 +144,7 @@ public class LogisticsManager : MonoBehaviour
     public void finalizeScore()
     {
         // what
-        scores[currentCourse - 1] = myBall.transform.GetChild(0).GetComponent<BallManager>().numHits;
+        scores[currentCourse - 1] = myBall.GetComponent<BallManager>().numHits;
         coursesScoreText[currentCourse - 1].text = "Level " + currentCourse.ToString() + ": " + scores[currentCourse - 1].ToString();
 
         int count = 0;
@@ -114,7 +154,6 @@ public class LogisticsManager : MonoBehaviour
         }
 
         totalScore.text = "Total: " + count.ToString();
-        myBall.GetComponent<BallManager>().numHits = 0;
     }
 
 

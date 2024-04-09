@@ -272,6 +272,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballSpawn: {fileID: 7862825418723521216, guid: 5fc4a629fe4ebac498bb54309282119b, type: 3}
+  ballSpawn_Lvl2: {fileID: 0}
+  ballSpawn_Lvl3: {fileID: 0}
 --- !u!114 &2396478248344728263
 MonoBehaviour:
   m_ObjectHideFlags: 0

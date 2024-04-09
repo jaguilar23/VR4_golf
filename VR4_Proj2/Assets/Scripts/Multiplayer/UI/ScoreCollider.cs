@@ -8,12 +8,15 @@ public class ScoreCollider : MonoBehaviour
     public ParticleSystem celebrateParticles;
     // find logistics gameobject
     private LogisticsManager myLogistics;
-    
+
+    public AudioSource myAudioSource;
+    public AudioClip ballInHoleSound;
     // Start is called before the first frame update
     void Start()
     {
         GameObject logistics = GameObject.Find("LogisticsManager");
         myLogistics = logistics.GetComponent<LogisticsManager>();
+        myAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -28,6 +31,16 @@ public class ScoreCollider : MonoBehaviour
         {
             StartCoroutine(Score(other.gameObject));
         }
+        
+        if (other.gameObject.tag == "Ball" && !myAudioSource.isPlaying)
+        {
+
+            myAudioSource.clip = ballInHoleSound;
+            myAudioSource.Play();
+        }
+        
+        
+
     }
 
     IEnumerator Score(GameObject ball)
